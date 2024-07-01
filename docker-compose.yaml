@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: user
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    # volumes:
+    #   - pgdata:/var/lib/postgresql/data
+
+  pgweb:
+    image: sosedoff/pgweb
+    restart: always
+    ports: 
+      - "8084:8081" 
+    environment:
+      - DATABASE_URL=postgres://user:password@postgres:5432/user?sslmode=disable
+    depends_on:
+      - postgres
+
+  ipfs-metadata:
+    image: ipfs-metadata:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    ports:
+      - 8080:8080
