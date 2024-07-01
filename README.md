@@ -107,3 +107,20 @@ GET /metadata
 
 ## Contact
 For any questions or suggestions, please open an issue or contact the repository owner.
+
+# Local Docker
+```bash
+docker compose build
+docker compose up -d
+```
+
+# Deploy
+```bash
+docker build -t 891377250788.dkr.ecr.us-east-1.amazonaws.com/blockparty/metadata:latest .
+
+cd terraform
+terraform init
+terraform apply
+
+docker push 891377250788.dkr.ecr.us-east-1.amazonaws.com/blockparty/metadata:latest
+```
